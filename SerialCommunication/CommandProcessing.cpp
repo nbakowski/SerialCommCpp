@@ -49,9 +49,9 @@ namespace CommandProcessing {
         case HELP:
             std::cout << "Available commands: \r\n";
             std::cout << "\r\n";
-            for (const std::string& command : CommandList)
+            for (const std::string& cmd : CommandList)
             {
-                std::cout << command << "\r\n";
+                std::cout << cmd << "\r\n";
             }
             std::cout << "\r\n";
             break;

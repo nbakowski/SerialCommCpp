@@ -1,5 +1,12 @@
 #include "SerialPort.h"
 
+SerialPort::SerialPort(const std::string& port_name, const uint32_t baud_rate)
+	: port_name(port_name), baud_rate(baud_rate), serial(io)
+{
+	serial.open(port_name);
+	serial.set_option(asio::serial_port_base::baud_rate(baud_rate));
+}
+
 void SerialPort::RebuildPort()
 {
 	StopAndClose();
@@ -17,13 +24,6 @@ void SerialPort::RebuildPort()
 	{
 		std::cerr << "Failed to rebuild serial port '" << port_name << "': " << ex.what() << "\r\n";
 	}
-}
-
-SerialPort::SerialPort(const std::string& port_name, const uint32_t baud_rate)
-	: port_name(port_name), baud_rate(baud_rate), serial(io)
-{
-	serial.open(port_name);
-	serial.set_option(asio::serial_port_base::baud_rate(baud_rate));
 }
 
 void SerialPort::SetBaudRate(const int new_baud_rate)

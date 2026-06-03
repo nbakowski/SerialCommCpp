@@ -7,8 +7,7 @@
 
 #include "SerialPort.h"
 
-namespace CommandProcessing {
-    inline const std::vector<std::string> CommandList = { "write", "change port", "change baud rate", "exit", "help" };
+namespace CommandProcessing {const std::vector<std::string> CommandList = { "write", "change port", "change baud rate", "exit", "help" };
 
     enum CommandType {
         WRITE,
@@ -19,5 +18,5 @@ namespace CommandProcessing {
     };
 
     CommandType GetCommandType(const std::string& value);
-    void ProcessCommands(SerialPort& port, bool& is_running, const CommandType command, std::string& input);
+    void ProcessCommands(SerialPort& port, bool& is_running, CommandType command, std::string& input);
 }

@@ -24,7 +24,7 @@ int main()
         // Check if input is a valid command
         if (count(CommandProcessing::CommandList.begin(), CommandProcessing::CommandList.end(), input) > 0)
         {
-            CommandProcessing::CommandType command = CommandProcessing::GetCommandType(input);
+            const CommandProcessing::CommandType command = CommandProcessing::GetCommandType(input);
             ProcessCommands(port, app_running, command, input);
         }
     }
