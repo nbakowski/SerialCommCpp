@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="SerialCommunication/SerialCommunication.vcxproj" Id="1128537f-7957-43ec-b7cf-f282cbbd94c8" />
+</Solution>
