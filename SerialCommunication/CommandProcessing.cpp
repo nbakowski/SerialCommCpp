@@ -5,11 +5,11 @@ namespace CommandProcessing {
     CommandType GetCommandType(const std::string& value)
     {
         const std::map<std::string, CommandType> CommandMap = {
-            { "write message",           WRITE_MESSAGE           },
-            { "change port",     CHANGE_NAME     },
-            { "change baud rate",CHANGE_BAUD_RATE},
-            { "exit",            STOP            },
-            { "help",            HELP            }
+            { "write message",     WRITE_MESSAGE    },
+            { "change port",       CHANGE_NAME      },
+            { "change baud rate",  CHANGE_BAUD_RATE },
+            { "exit",              STOP             },
+            { "help",              HELP             }
         };
 
         const auto it = CommandMap.find(value);
@@ -26,18 +26,18 @@ namespace CommandProcessing {
         switch (command)
         {
         case WRITE_MESSAGE:
-            std::cout << "Enter the message: \r\n"; std::getline(std::cin, input);
+            std::cout << "Enter the message: "; std::getline(std::cin, input);
             port.WriteMessage(input);
             break;
 
         case CHANGE_NAME:
-            std::cout << "Enter the new name: \r\n"; std::cin >> input;
+            std::cout << "Enter the new name: "; std::cin >> input;
             port.SetPortName(input);
             break;
 
         case CHANGE_BAUD_RATE: {
             int new_baud_rate = 0;
-            std::cout << "Enter the new baud rate: \r\n"; std::cin >> new_baud_rate;
+            std::cout << "Enter the new baud rate: "; std::cin >> new_baud_rate;
             port.SetBaudRate(new_baud_rate);
             break;
         }
@@ -47,7 +47,7 @@ namespace CommandProcessing {
             break;
 
         case HELP:
-            std::cout << "Available commands: \r\n";
+            std::cout << "\r\nAvailable commands: \r\n";
             std::cout << "\r\n";
             for (const std::string& cmd : CommandList)
             {
