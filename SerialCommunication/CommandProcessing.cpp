@@ -5,7 +5,7 @@ namespace CommandProcessing {
     CommandType GetCommandType(const std::string& value)
     {
         const std::map<std::string, CommandType> CommandMap = {
-            { "write",           WRITE           },
+            { "write message",           WRITE_MESSAGE           },
             { "change port",     CHANGE_NAME     },
             { "change baud rate",CHANGE_BAUD_RATE},
             { "exit",            STOP            },
@@ -25,7 +25,7 @@ namespace CommandProcessing {
     {
         switch (command)
         {
-        case WRITE:
+        case WRITE_MESSAGE:
             std::cout << "Enter the message: \r\n"; std::getline(std::cin, input);
             port.WriteMessage(input);
             break;

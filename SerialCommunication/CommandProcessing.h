@@ -7,10 +7,10 @@
 
 #include "SerialPort.h"
 
-namespace CommandProcessing {const std::vector<std::string> CommandList = { "write", "change port", "change baud rate", "exit", "help" };
+namespace CommandProcessing {const std::vector<std::string> CommandList = { "write message", "change port", "change baud rate", "exit", "help" };
 
     enum CommandType {
-        WRITE,
+        WRITE_MESSAGE,
         CHANGE_NAME,
         CHANGE_BAUD_RATE,
         STOP,

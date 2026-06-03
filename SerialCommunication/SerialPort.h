@@ -9,7 +9,7 @@ class SerialPort
 {
 	std::string port_name;
 	uint32_t baud_rate;
-	asio::io_service io{};
+	asio::io_context io{};
 	asio::serial_port serial;
 	void RebuildPort();
 

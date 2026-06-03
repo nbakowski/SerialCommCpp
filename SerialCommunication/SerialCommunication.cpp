@@ -1,5 +1,6 @@
 #include <iostream>
 #include <map>
+#include <windows.h>
 
 #include "SerialPort.h"
 #include "CommandProcessing.h"
