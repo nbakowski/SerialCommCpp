@@ -7,7 +7,7 @@
 int main()
 {
     std::string port_name;
-    int baud_rate = 0;
+    int32_t baud_rate = 0;
     bool app_running = true;
 
     std::cout << "Enter the port name: "; std::cin >> port_name;
@@ -15,7 +15,7 @@ int main()
 
     SerialPort port(port_name, baud_rate);
 
-    while (app_running);
+    while (app_running)
     {
         std::string input;
         std::cout << "\nEnter the command: ";
