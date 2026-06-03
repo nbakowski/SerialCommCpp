@@ -27,9 +27,11 @@ int main()
             const CommandProcessing::CommandType command = CommandProcessing::GetCommandType(input);
             ProcessCommands(port, app_running, command, input);
         }
+        else
+        {
+            std::cout << "\n\033[31mInvalid command.\033[0m Use 'help' for more information.\r\n";
+        }
     }
-
-    port.StopAndClose();
 
     return 0;
 }

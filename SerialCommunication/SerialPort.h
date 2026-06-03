@@ -15,6 +15,7 @@ class SerialPort
 
 public:
 	SerialPort(const std::string& port_name, int32_t baud_rate);
+	~SerialPort() noexcept;
 
 	const std::string& GetCurrentPortName() const
 	{

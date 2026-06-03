@@ -7,6 +7,12 @@ SerialPort::SerialPort(const std::string& port_name, const int32_t baud_rate)
 	serial.set_option(asio::serial_port_base::baud_rate(baud_rate));
 }
 
+SerialPort::~SerialPort() noexcept
+{
+	try { StopAndClose(); }
+	catch (...) { /* swallow any errors in dtor */ }
+}
+
 void SerialPort::RebuildPort()
 {
 	StopAndClose();
