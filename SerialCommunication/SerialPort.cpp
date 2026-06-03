@@ -54,7 +54,7 @@ void SerialPort::SetPortName(const std::string& new_port_name)
 	}
 }
 
-void SerialPort::SetRepeatAmount(int16_t repeat_count)
+void SerialPort::SetRepeatAmount(const int16_t repeat_count)
 {
 	repeat_amount = repeat_count;
 	std::cout << std::format("Set repeat amount to: \033[31m{}\033[0m\r\n", repeat_amount);

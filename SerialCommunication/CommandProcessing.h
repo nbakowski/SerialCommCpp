@@ -3,15 +3,15 @@
 #include <vector>
 #include <map>
 #include <string>
-#include <iostream>
 
 #include "SerialPort.h"
 
-namespace CommandProcessing {const std::vector<std::string> CommandList = { 
-    "write message", 
-    "change port", 
-    "change baud rate", 
-    "exit", 
+namespace CommandProcessing {
+    const std::vector<std::string> CommandList = {
+    "write message",
+    "change port",
+    "change baud rate",
+    "exit",
     "help",
     "repeating write message",
     "set repeats"

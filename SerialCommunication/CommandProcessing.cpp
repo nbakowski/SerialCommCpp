@@ -14,8 +14,7 @@ namespace CommandProcessing {
             { "set repeats",             SET_REPEAT_AMOUNT}
         };
 
-        const auto it = CommandMap.find(value);
-        if (it != CommandMap.end())
+        if (const auto it = CommandMap.find(value); it != CommandMap.end())
         {
             return it->second;
         }
@@ -50,7 +49,7 @@ namespace CommandProcessing {
         }
 
         case SET_REPEAT_AMOUNT: {
-            uint16_t amount = 0;
+            int16_t amount = 0;
             std::cout << "Enter a new repeat amount: "; std::cin >> amount;
             port.SetRepeatAmount(amount);
             break;
