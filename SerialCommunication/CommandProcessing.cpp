@@ -2,6 +2,8 @@
 
 namespace CommandProcessing {
 
+    using enum CommandType;
+
     CommandType GetCommandType(const std::string& value)
     {
         const std::map<std::string, CommandType> CommandMap = {
@@ -60,8 +62,7 @@ namespace CommandProcessing {
             break;
 
         case HELP:
-            std::cout << "\r\nAvailable commands: \r\n";
-            std::cout << "\r\n";
+            std::cout << "\r\nAvailable commands: \r\n\n";
             for (const std::string& cmd : CommandList)
             {
                 std::cout << cmd << "\r\n";
