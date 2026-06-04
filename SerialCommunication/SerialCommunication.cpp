@@ -3,17 +3,13 @@
 
 #include "SerialPort.h"
 #include "CommandProcessing.h"
+#include "SettingsReader.h"
 
 int main()
 {
-    std::string port_name;
-    int32_t baud_rate = 0;
     bool app_running = true;
 
-    std::cout << "Enter the port name: "; std::cin >> port_name;
-    std::cout << "Enter the baud rate: "; std::cin >> baud_rate;
-
-    SerialPort port(port_name, baud_rate);
+    SerialPort port;
 
     while (app_running)
     {
@@ -22,16 +18,14 @@ int main()
         std::getline(std::cin, input);
 
         // Check if input is a valid command
-        if (std::ranges::count(CommandProcessing::CommandList, input) > 0)
+        if (auto command = CommandProcessing::GetCommandType(input)) 
         {
-            const CommandProcessing::CommandType command = CommandProcessing::GetCommandType(input);
-            ProcessCommands(port, app_running, command, input);
+            ProcessCommands(port, app_running, *command, input);
         }
-        else
+        else 
         {
-            std::cout << "\n\033[31mInvalid command.\033[0m Use 'help' for more information.\r\n";
+            std::cout << "\n\033[31mInvalid command.\033[0m\r\n";
         }
     }
-
     return 0;
 }

@@ -1,10 +1,21 @@
 #include "SerialPort.h"
 
-SerialPort::SerialPort(const std::string& port_name, const int32_t baud_rate)
-	: port_name(port_name), baud_rate(baud_rate), serial(io)
+SerialPort::SerialPort()
+	: serial(io), settings_reader(port_name, baud_rate, repeat_amount)
 {
-	serial.open(port_name);
-	serial.set_option(asio::serial_port_base::baud_rate(baud_rate));
+	settings_reader.SetSettings();
+	try
+	{
+		serial.open(port_name);
+		serial.set_option(asio::serial_port_base::baud_rate(baud_rate));
+	}
+	catch (const std::exception&)
+	{
+		std::cerr << std::format(
+			"Failed to open the port: \033[31m{}\033[0m. Make sure the settings are correct.\r\n", 
+			port_name
+		);
+	}
 }
 
 SerialPort::~SerialPort() noexcept
@@ -16,6 +27,7 @@ SerialPort::~SerialPort() noexcept
 void SerialPort::RebuildPort()
 {
 	StopAndClose();
+
 	try
 	{
 		if (port_name.empty())
@@ -30,6 +42,7 @@ void SerialPort::RebuildPort()
 	{
 		std::cerr << "Failed to rebuild serial port '" << port_name << "': " << ex.what() << "\r\n";
 	}
+	settings_reader.UpdateSettingsFile();
 }
 
 void SerialPort::SetBaudRate(const int new_baud_rate)
@@ -64,25 +77,40 @@ void SerialPort::SetRepeatAmount(const int16_t repeat_count)
 {
 	repeat_amount = repeat_count;
 	std::cout << std::format("Set repeat amount to: \033[31m{}\033[0m\r\n", repeat_amount);
+	RebuildPort();
 }
 
 void SerialPort::WriteMessage(const std::string& message_to_send)
 {
-	asio::write(serial, asio::buffer(message_to_send));
-	std::cout << "Sent message: " << message_to_send << "\r\n";
+	try
+	{
+		asio::write(serial, asio::buffer(message_to_send));
+		std::cout << "Sent message: " << message_to_send << "\r\n";
+	}
+	catch (const std::exception& ex) 
+	{
+		std::cerr << "Write failed: " << ex.what() << "\r\n";
+	}
 }
 
 void SerialPort::RepeatingWriteMessage(const std::string& message_to_send)
 {
-	for (short i = 0; i < repeat_amount; i++)
+	try
 	{
-		asio::write(serial, asio::buffer(message_to_send));
+		for (short i = 0; i < repeat_amount; i++)
+		{
+			asio::write(serial, asio::buffer(message_to_send));
+		}
+		std::cout << std::format(
+			"Sent message: {} {} times.\r\n",
+			message_to_send,
+			repeat_amount
+		);
 	}
-	std::cout << std::format(
-		"Sent message: {} {} times.\r\n", 
-		message_to_send, 
-		repeat_amount
-	);
+	catch (const std::exception& ex)
+	{
+		std::cerr << "Write failed: " << ex.what() << "\r\n";
+	}
 }
 
 void SerialPort::StopAndClose()

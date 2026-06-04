@@ -6,12 +6,14 @@
 
 #include "SerialPort.h"
 
-namespace CommandProcessing {
+namespace CommandProcessing 
+{
 
     // Always keep the COMMAND_COUNT at the bottom, otherwise problems.
-    enum class CommandType {
+    enum class CommandType 
+    {
         WRITE_MESSAGE,
-        CHANGE_NAME,
+        CHANGE_PORT,
         CHANGE_BAUD_RATE,
         STOP,
         HELP,
@@ -32,6 +34,6 @@ namespace CommandProcessing {
         "set repeats"
     };
 
-    CommandType GetCommandType(const std::string& value);
+    std::optional<CommandType> GetCommandType(const std::string& value);
     void ProcessCommands(SerialPort& port, bool& is_running, CommandType command, std::string& input);
 }

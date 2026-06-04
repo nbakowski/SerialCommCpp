@@ -1,14 +1,15 @@
 #include "CommandProcessing.h"
 
-namespace CommandProcessing {
+namespace CommandProcessing 
+{
 
     using enum CommandType;
 
-    CommandType GetCommandType(const std::string& value)
+    std::optional<CommandType> GetCommandType(const std::string& value)
     {
-        const std::map<std::string, CommandType> CommandMap = {
+        static const std::map<std::string_view, CommandType> CommandMap = {
             { "write message",           WRITE_MESSAGE    },
-            { "change port",             CHANGE_NAME      },
+            { "change port",             CHANGE_PORT      },
             { "change baud rate",        CHANGE_BAUD_RATE },
             { "exit",                    STOP             },
             { "help",                    HELP             },
@@ -16,12 +17,10 @@ namespace CommandProcessing {
             { "set repeats",             SET_REPEAT_AMOUNT}
         };
 
-        if (const auto it = CommandMap.find(value); it != CommandMap.end())
-        {
+        if (const auto it = CommandMap.find(value); it != CommandMap.end()) {
             return it->second;
         }
-
-        throw std::invalid_argument("Unknown command: " + value);
+        return std::nullopt;
     }
 
     void ProcessCommands(SerialPort& port, bool& is_running, const CommandType command, std::string& input)
@@ -29,31 +28,48 @@ namespace CommandProcessing {
         switch (command)
         {
         case WRITE_MESSAGE:
-            std::cout << "Enter the message: "; std::getline(std::cin, input);
+            std::cout << "Enter the message: ";
+            std::getline(std::cin >> std::ws, input);
             port.WriteMessage(input);
             break;
 
         case REPEAT_WRITE_MESSAGE:
-            std::cout << "Enter the message: "; std::getline(std::cin, input);
+            std::cout << "Enter the message: ";
+            std::getline(std::cin >> std::ws, input);
             port.RepeatingWriteMessage(input);
             break;
 
-        case CHANGE_NAME:
-            std::cout << "Enter the new name: "; std::cin >> input;
+        case CHANGE_PORT:
+            std::cout << "Enter the new name: ";
+            std::getline(std::cin >> std::ws, input);
             port.SetPortName(input);
             break;
 
         case CHANGE_BAUD_RATE: {
-            int32_t new_baud_rate = 0;
-            std::cout << "Enter the new baud rate: "; std::cin >> new_baud_rate;
-            port.SetBaudRate(new_baud_rate);
+            std::string line;
+            std::cout << "Enter the new baud rate: ";
+            std::getline(std::cin >> std::ws, line);
+            try {
+                const int32_t new_baud_rate = std::stoi(line);
+                port.SetBaudRate(new_baud_rate);
+            }
+            catch (const std::exception& ex) {
+                std::cerr << std::format("Invalid baud rate: {}\r\n", ex.what());
+            }
             break;
         }
 
         case SET_REPEAT_AMOUNT: {
-            int16_t amount = 0;
-            std::cout << "Enter a new repeat amount: "; std::cin >> amount;
-            port.SetRepeatAmount(amount);
+            std::string line;
+            std::cout << "Enter a new repeat amount: ";
+            std::getline(std::cin >> std::ws, line);
+            try {
+                const int16_t amount = static_cast<int16_t>(std::stoi(line));
+                port.SetRepeatAmount(amount);
+            }
+            catch (const std::exception& ex) {
+                std::cerr << std::format("Invalid repeat amount: {}\r\n", ex.what());
+            }
             break;
         }
 

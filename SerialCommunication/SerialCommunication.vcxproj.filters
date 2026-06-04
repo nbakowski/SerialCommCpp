@@ -24,6 +24,9 @@
     <ClCompile Include="CommandProcessing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SettingsReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SerialPort.h">
@@ -32,5 +35,11 @@
     <ClInclude Include="CommandProcessing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SettingsReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

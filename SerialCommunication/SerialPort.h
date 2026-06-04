@@ -3,19 +3,27 @@
 #include <string>
 #include <iostream>
 #include <asio.hpp>
+#include "SettingsReader.h"
 
 class SerialPort
 {
-	std::string port_name;
-	int32_t baud_rate;
+	std::string port_name = "debug";
+	int32_t baud_rate = 9600;
+	int16_t repeat_amount = 10;
 	asio::io_context io{};
 	asio::serial_port serial;
-	int16_t repeat_amount = 10;
+	SettingsReader settings_reader;
 	void RebuildPort();
 
 public:
-	SerialPort(const std::string& port_name, int32_t baud_rate);
+	SerialPort();
 	~SerialPort() noexcept;
+
+	// Prevent dangling references from move/copy
+	SerialPort(const SerialPort&) = delete;
+	SerialPort& operator = (const SerialPort&) = delete;
+	SerialPort(SerialPort&&) = delete;
+	SerialPort& operator=(SerialPort&&) = delete;
 
 	const std::string& GetCurrentPortName() const
 	{
