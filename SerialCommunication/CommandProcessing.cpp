@@ -7,7 +7,7 @@ namespace CommandProcessing {
 
     std::optional<CommandType> GetCommandType(const std::string& value)
     {
-        static const std::map<std::string_view, CommandType> CommandMap = {
+        static const std::unordered_map<std::string_view, CommandType> CommandMap = {
             { "write message",           WRITE_MESSAGE    },
             { "change port",             CHANGE_PORT      },
             { "change baud rate",        CHANGE_BAUD_RATE },
