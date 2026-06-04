@@ -1,9 +1,7 @@
-#include <iostream>
-#include <map>
-
 #include "SerialPort.h"
 #include "CommandProcessing.h"
 #include "SettingsReader.h"
+#include <iostream>
 
 int main()
 {

@@ -1,4 +1,5 @@
 #include "SerialPort.h"
+#include <iostream>
 
 SerialPort::SerialPort()
 	: serial(io), settings_reader(port_name, baud_rate, repeat_amount)

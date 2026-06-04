@@ -1,9 +1,8 @@
 #pragma once
 
-#include <string>
-#include <iostream>
-#include <asio.hpp>
 #include "SettingsReader.h"
+#include <string>
+#include <asio.hpp>
 
 class SerialPort
 {
@@ -24,16 +23,6 @@ public:
 	SerialPort& operator = (const SerialPort&) = delete;
 	SerialPort(SerialPort&&) = delete;
 	SerialPort& operator=(SerialPort&&) = delete;
-
-	const std::string& GetCurrentPortName() const
-	{
-		return port_name;
-	}
-
-	int32_t GetCurrentBaudRate() const
-	{
-		return baud_rate;
-	}
 
 	void SetBaudRate(int new_baud_rate);
 	void SetPortName(const std::string& new_port_name);

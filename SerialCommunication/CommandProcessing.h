@@ -1,10 +1,8 @@
 #pragma once
 
-#include <array>
-#include <map>
-#include <string>
-
 #include "SerialPort.h"
+#include <array>
+#include <string>
 
 namespace CommandProcessing 
 {

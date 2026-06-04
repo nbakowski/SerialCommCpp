@@ -1,12 +1,12 @@
 #include "SettingsReader.h"
+#include <iostream>
 
 SettingsReader::SettingsReader(std::string& port_name, int32_t& baud_rate, int16_t& repeat_amount)
     : port_name(port_name), baud_rate(baud_rate), repeat_amount(repeat_amount) {}
 
-
 void SettingsReader::UpdateSettingsFile()
 {
-    data = { 
+    data = {
         {"port_name", port_name}, 
         {"baud_rate", baud_rate},
         {"repeat_amount", repeat_amount}
@@ -20,8 +20,7 @@ void SettingsReader::UpdateSettingsFile()
     new_file << data.dump(4);
 }
 
-void SettingsReader::GetSettings()
-{
+void SettingsReader::GetSettings() {
     std::cout << "Enter the port name: "; std::cin >> port_name;
     std::cout << "Enter the baud rate: "; std::cin >> baud_rate;
     std::cout << "Enter the repeat amount: "; std::cin >> repeat_amount;
@@ -33,9 +32,7 @@ void SettingsReader::GetSettings()
 
 void SettingsReader::SetSettings()
 {
-    std::ifstream settings_file("settings.json");
-
-    if (settings_file)
+    if (std::ifstream settings_file("settings.json"); settings_file)
     {
         try
         {
@@ -57,9 +54,9 @@ void SettingsReader::SetSettings()
     // Set values from settings.json
     try
     {
-        std::string temp_port_name     = data.at("port_name");
-        int32_t temp_baud_rate     = data.at("baud_rate");
-        int16_t temp_repeat_amount = data.at("repeat_amount");
+        const std::string temp_port_name     = data.at("port_name");
+        const int32_t temp_baud_rate     = data.at("baud_rate");
+        const int16_t temp_repeat_amount = data.at("repeat_amount");
 
         port_name     = temp_port_name;
         baud_rate     = temp_baud_rate;
