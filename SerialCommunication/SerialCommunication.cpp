@@ -16,9 +16,9 @@ int main()
         std::getline(std::cin, input);
 
         // Check if input is a valid command
-        if (auto command = CommandProcessing::GetCommandType(input)) 
+        if (auto command = CommandProcessing::GetCommandType(input))
         {
-            ProcessCommands(port, app_running, *command, input);
+            CommandProcessing::ProcessCommands(port, app_running, *command, input);
         }
         else 
         {

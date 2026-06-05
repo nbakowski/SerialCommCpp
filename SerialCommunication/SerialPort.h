@@ -2,15 +2,15 @@
 
 #include "SettingsReader.h"
 #include <string>
-#include <asio.hpp>
+#include <boost/asio.hpp>
 
 class SerialPort
 {
 	std::string port_name = "debug";
 	int32_t baud_rate = 9600;
 	int16_t repeat_amount = 10;
-	asio::io_context io{};
-	asio::serial_port serial;
+	boost::asio::io_context io{};
+	boost::asio::serial_port serial;
 	SettingsReader settings_reader;
 	void RebuildPort();
 

@@ -8,7 +8,7 @@ SerialPort::SerialPort()
 	try
 	{
 		serial.open(port_name);
-		serial.set_option(asio::serial_port_base::baud_rate(baud_rate));
+		serial.set_option(boost::asio::serial_port_base::baud_rate(baud_rate));
 	}
 	catch (const std::exception&)
 	{
@@ -37,7 +37,7 @@ void SerialPort::RebuildPort()
 			return;
 		}
 		serial.open(port_name);
-		serial.set_option(asio::serial_port_base::baud_rate(baud_rate));
+		serial.set_option(boost::asio::serial_port_base::baud_rate(baud_rate));
 	}
 	catch (const std::exception& ex)
 	{
@@ -85,7 +85,7 @@ void SerialPort::WriteMessage(const std::string& message_to_send)
 {
 	try
 	{
-		asio::write(serial, asio::buffer(message_to_send));
+		boost::asio::write(serial, boost::asio::buffer(message_to_send));
 		std::cout << "Sent message: " << message_to_send << "\r\n";
 	}
 	catch (const std::exception& ex) 
@@ -100,7 +100,7 @@ void SerialPort::RepeatingWriteMessage(const std::string& message_to_send)
 	{
 		for (short i = 0; i < repeat_amount; i++)
 		{
-			asio::write(serial, asio::buffer(message_to_send));
+			boost::asio::write(serial, boost::asio::buffer(message_to_send));
 		}
 		std::cout << std::format(
 			"Sent message: {} {} times.\r\n",
