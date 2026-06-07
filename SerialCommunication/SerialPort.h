@@ -4,32 +4,25 @@
 #include <string>
 #include <boost/asio.hpp>
 
-class SerialPort
+class serial_port
 {
-	std::string port_name = "debug";
-	int32_t baud_rate = 9600;
-	int16_t repeat_amount = 10;
-	boost::asio::io_context io{};
-	boost::asio::serial_port serial;
-	SettingsReader settings_reader;
-	void RebuildPort();
+	std::string port_name_ = "debug";
+	int32_t baud_rate_ = 9600;
+	int16_t repeat_amount_ = 10;
+	boost::asio::io_context io_;
+	boost::asio::serial_port serial_;
+	settings_reader settings_reader_;
+	void rebuild_port();
 
 public:
-	SerialPort();
-	~SerialPort() noexcept;
+	serial_port();
 
-	// Prevent dangling references from move/copy
-	SerialPort(const SerialPort&) = delete;
-	SerialPort& operator = (const SerialPort&) = delete;
-	SerialPort(SerialPort&&) = delete;
-	SerialPort& operator=(SerialPort&&) = delete;
+	void set_baud_rate(int new_baud_rate);
+	void set_port_name(const std::string& new_port_name);
+	void set_repeat_amount(int16_t repeat_count);
 
-	void SetBaudRate(int new_baud_rate);
-	void SetPortName(const std::string& new_port_name);
-	void SetRepeatAmount(int16_t repeat_count);
-
-	void WriteMessage(const std::string& message_to_send);
-	void RepeatingWriteMessage(const std::string& message_to_send);
-	void StopAndClose();
+	void write_message(const std::string& message_to_send);
+	void repeating_write_message(const std::string& message_to_send);
+	void stop_and_close();
 };
 

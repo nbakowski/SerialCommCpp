@@ -7,7 +7,7 @@ int main()
 {
     bool app_running = true;
 
-    SerialPort port;
+    serial_port port;
 
     while (app_running)
     {
@@ -16,9 +16,9 @@ int main()
         std::getline(std::cin, input);
 
         // Check if input is a valid command
-        if (auto command = CommandProcessing::GetCommandType(input))
+        if (const auto command = command_processing::get_command_type(input))
         {
-            CommandProcessing::ProcessCommands(port, app_running, *command, input);
+            command_processing::process_commands(port, app_running, *command, input);
         }
         else 
         {
